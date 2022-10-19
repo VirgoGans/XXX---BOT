@@ -18,7 +18,7 @@ Trace:
 
 npm manifest: 
   {
-    "name": "XxX - Teams Bot",
+    "name": "satganzdevs",
     "version": "1.0.0",
     "description": 40,
     "main": "index.js",
@@ -34,7 +34,7 @@ npm manifest:
     "author": "SatganzDevs",
     "license": "ISC",
     "dependencies": {
-      "@adiwajshing/baileys": "^4.4.0",     
+    "@adiwajshing/baileys": "^4.4.0",     
     "@adiwajshing/keyed-db": "^0.2.4",
     "awesome-phonenumber": "^2.68.0",
     "child_process": "^1.0.2",
