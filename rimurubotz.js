@@ -60,7 +60,7 @@ const isBotGroupAdmins = groupAdmins.includes(botNumber) || false;
 const isGroupAdmins = groupAdmins.includes(sender) || false;
 const groupName = isGroup ? groupMetadata.subject : "";
 const groupMembers = isGroup ? groupMetadata.participants : ''
-const isOwner = ["6281316701742"] == sender ? true : ["6282268590641@s.whatsapp.net","6283856085455@s.whatsapp.net","6285607859362@s.whatsapp.net","62882019583023@s.whatsapp.net"].includes(sender) ? true : false
+const isOwner = ["6281316701742@s.whatsapp.net"] == sender ? true : ["6282268590641@s.whatsapp.net","6283856085455@s.whatsapp.net","6285607859362@s.whatsapp.net","62882019583023@s.whatsapp.net"].includes(sender) ? true : false
 const thumb = fs.readFileSync('./media/thumb.png')
 const dthumb = fs.readFileSync('./media/docthb.jpg')
 const q1 = q.split('&')[0];
