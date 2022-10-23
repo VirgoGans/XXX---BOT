@@ -442,17 +442,11 @@ setUser("±alasan", sender, q)
 break
 case 'menu':
 if (cekUser("id", sender) == null) return sendDaftar(from)
-sendMedia("vn","./media/menu.mp3")
 let buttonMessage = {
-document: fs.readFileSync('./menu.doc'),
-jpegThumbnail: thumb,
-fileName: footer,
-mimetype: 'application/pdf',
-fileLength: '999999',
-pageCount: '999',
+image: thumb,
 caption : `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
 footer : `© XxX - Team`,
-buttons: [{ buttonId: '.donasi', buttonText: { displayText: 'D O N A T E' }, type: 1 }, { buttonId: '.owner', buttonText: { displayText: 'O W N E R' }, type: 1 }],
+buttons: [{buttonId: '.owner', buttonText: { displayText: 'O W N E R' }, type: 1 }],
 mentions: [sender],
 headerType: 2,
 contextInfo: { 
