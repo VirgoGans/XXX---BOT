@@ -15,7 +15,7 @@
   "author": "SatganzDevs",
   "license": "ISC",
   "dependencies": {
-    "@adiwajshing/baileys": "^4.4.0",     
+    "@adiwajshing/baileys": "github:XinnChan/Baileys",     
     "@adiwajshing/keyed-db": "^0.2.4",
     "awesome-phonenumber": "^2.68.0",
     "child_process": "^1.0.2",
