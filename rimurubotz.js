@@ -661,7 +661,7 @@ setUser("±alasan", sender, q)
 break
 case 'menu':
 if (cekUser("id", sender) == null) return sendDaftar(from)
-const buttonImage = {
+const buttonMenu = {
 image: thumb,
 fileLength: 88808964843634667969,
 caption: `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
@@ -677,7 +677,7 @@ title: "Join Group Whatsapp Official",
 body: footer,
 thumbnail: thumb,
 sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
-satzz.sendMessage(from, buttonImage, { quoted : sat })
+satzz.sendMessage(from, buttonMenu, { quoted : sat })
 break
 case 's':
 case 'sticker':
@@ -849,7 +849,7 @@ if (nyz.isValid == false) return reply("Nomer Yang anda masukkan tidak valid, La
 await satzz.groupParticipantsUpdate(from, [nyz.phoneNumber.split("+")[1] + "@s.whatsapp.net"], "add").catch(e => {only("error", satzz, from)})
 break
 case 'repeat':
-var tt =`${q1}.repeat(q2)
+var tt =`${q1}.repeat(q2)`
 reply(tt)
 break
 case 'promote':
