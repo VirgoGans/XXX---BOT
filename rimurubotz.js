@@ -387,6 +387,8 @@ const template = generateWAMessageFromContent(jid, proto.Message.fromObject({
     }), { userJid: satzz.user.jid, quoted: quoted, contextInfo: { mentionedJid: parseMention(contentText + footer) }, ephemeralExpiration: 86400, ...options });
     return await satzz.relayMessage(jid, template.message, { messageId: template.key.id })
    }
+const buttonMenu = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}}]
+const buttonDef = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}},{ quickReplyButton: { displayText: 'MENU', id: '.menu'}}]
 const sendDaftar = async (jid) => {
 let cap = `${ucapin} - @${sender.split('@')[0]}\n\nKamu belum terdaftar di Database bot, Silahkan mendaftar terlebih dahulu, tekan tombol di bawah`
 try { var pp_user = await satzz.profilePictureUrl(i, 'image') } catch { var pp_user = fs.readFileSync('./media/pp_kosong.png') }
@@ -448,6 +450,94 @@ satzz.sendMessage(jid, buttonMessage, { quoted, upload: satzz.waUploadToServer, 
         }
         satzz.sendMessage(jid, templateMessage)
         }    
+        
+        
+        
+        
+        satzz.send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ image: img }, { upload: satzz.waUploadToServer })
+        var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
+        templateMessage: {
+        hydratedTemplate: {
+        imageMessage: message.imageMessage,
+               "hydratedContentText": text,
+               "hydratedFooterText": footer,
+               "hydratedButtons": but
+            }
+            }
+            }), options)
+           	 satzz.relayMessage(jid, template.message, { messageId: template.key.id })
+    		}
+
+    /** Send Button 5 Video
+     *
+     * @param {*} jid
+     * @param {*} text
+     * @param {*} footer
+     * @param {*} Video
+     * @param [*] button
+     * @param {*} options
+     * @returns
+     */
+    satzz.send5ButVid = async (jid , text = '' , footer = '', vid, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ video: vid }, { upload: satzz.waUploadToServer })
+        var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
+        templateMessage: {
+        hydratedTemplate: {
+        videoMessage: message.videoMessage,
+               "hydratedContentText": text,
+               "hydratedFooterText": footer,
+               "hydratedButtons": but
+            }
+            }
+            }), options)
+            satzz.relayMessage(jid, template.message, { messageId: template.key.id })
+    }
+
+    /** Send Button 5 Gif
+     *
+     * @param {*} jid
+     * @param {*} text
+     * @param {*} footer
+     * @param {*} Gif
+     * @param [*] button
+     * @param {*} options
+     * @returns
+     */
+    satzz.send5ButGif = async (jid , text = '' , footer = '', gif, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ video: gif, gifPlayback: true }, { upload: satzz.waUploadToServer })
+        var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
+        templateMessage: {
+        hydratedTemplate: {
+        videoMessage: message.videoMessage,
+               "hydratedContentText": text,
+               "hydratedFooterText": footer,
+               "hydratedButtons": but
+            }
+            }
+            }), options)
+            satzz.relayMessage(jid, template.message, { messageId: template.key.id })
+    }
+
+    /**
+     * 
+     * @param {*} jid 
+     * @param {*} buttons 
+     * @param {*} caption 
+     * @param {*} footer 
+     * @param {*} quoted 
+     * @param {*} options 
+     */
+    satzz.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
+        let buttonMessage = {
+            text,
+            footer,
+            buttons,
+            headerType: 2,
+            ...options
+        }
+        satzz.sendMessage(jid, buttonMessage, { quoted, ...options })
+    }
                 
                 
     
@@ -462,7 +552,14 @@ satzz.sendMessage(jid, buttonMessage, { quoted, upload: satzz.waUploadToServer, 
         const pM = async (text = '') => {
 	return [...text.matchAll(/@([0-9]{5,16}|0)/g)].map(v => v[1] + '@s.whatsapp.net')
 	}
-                
+                function pickRandom(list) {
+  return list[Math.floor(list.length * Math.random())]
+  }
+  function randomId(n) {
+      for (var bytes = []; n > 0; n--)
+        bytes.push(Math.floor(Math.random() * 256))
+      return bytes
+    }
                 
                
                 
@@ -525,8 +622,8 @@ break
 case 'hacker':
 case 'heker':
 var heker = ["Dear kamu yang tertulis di halaman defacementku, Kapan jadi pacarku?","Aku rela ko jadi Processor yg kepanasan, asalkan kmu yg jadi heatsink'y yg setiap saat bisa mendinginkan ku.","Gak usah nyari celah xss deh, karena ketika kamu ngeklik hatiku udah muncul pop up namamu.","berharap setelah aku berhasil login di hati kamu ga akan ada tombol logout, dan sessionku ga bakal pernah expired.","Masa aku harus pake teknik symlink bypass buat buka-buka folder hatimu yg open_basedir enabled.","Diriku dan Dirimu itu ibarat PHP dan MySQL yang belum terkoneksi.","Jangan cuma bisa inject hatinya,tapi harus bisa patchnya juga. Biar tidak selingkuh sama hacker lain.","Aku memang programmer PHP,tapi aku nggak akan php-in kamu kok.","Eneeeng. | Apache? | Km wanita yg paling Unix yg pernah aku kenal |","Sayang, capslock kamu nyala ya? | ngga, kenapa emangnya? | soalnya nama kamu ketulis gede bgt di hati aku | zzz! smile","Aku deketin kamu cuma untuk redirect ke hati temenmu.","Domain aja bisa parkir, masa cintaku ga bisa parkir dihatimu?","Aku boleh jadi pacarmu? | 400(Bad Request) | Aku cium boleh? | 401(Authorization Required) | Aku buka bajumu yah | 402(Payment Required) sad","kamu tau ga beda'y kamu sama sintax PHP, kalo sintax PHP itu susah di hafalin kalo kamu itu susah di lupain","Kamu dulu sekolah SMK ambil kejuruan apa? | Teknik Komputer Jaringan | Terus sekarang bisa apa aja? | Menjaring hatimu lewat komputerku | biggrin","Jika cinta itu Array, maka,cintaku padamu tak pernah empty jika di unset().","SQLI ( Structured Query Love Injection )","aku ingin kamu rm -rf kan semua mantan di otak mu,akulah root hati kamu","Senyumu bagaikan cooler yang menyejukan hatiku ketika sedang overclock.","kamu adalah terminalku, dimana aku menghabiskan waktuku untuk mengetikan beribu baris kode cinta untukmu smile","Aku seneng nongkrong di zone-h, karena disanalah aku arsipkan beberapa website yang ada foto kamunya.","hatiku ibarat vps hanya untukmu saja bukan shared hosting yg bisa tumpuk berbagai domain cinta.","Aku bukanlah VNC Server Tanpa Authentication yg bisa kamu pantau kapan saja.","Jangan men-dualboot-kan hatiku kepadamu.","cintaku kan ku Ctrl+A lalu kan ku Ctrl+C dan kan ku Ctrl+V tepat di folder system hatimu.","KDE kalah Cantiknya, GNOME kalah Simplenya, FluxBox kalah Ringannya, pokonya Semua DE itu Kalah Sama Kamu.","Cintamu bagaikan TeamViewer yang selalu mengendalikan hatiku","cinta kita tak akan bisa dipisahkan walau setebal apapun itu firewall...!!"]
-var qu = getRandom(heker)            
-satzz.send5ButMsg(from, qu, footer, [{ urlButton: {displayText: 'COPY', url: 'https://www.whatsapp.com/otp/copy/${qu}'}}, { quickReplyButton: { displayText: 'NEXT', id: '.heker'}}])
+var qu = pickRandom(heker)            
+satzz.send5ButMsg(from, qu, footer, [{ urlButton: {displayText: 'COPY', url: `https://www.whatsapp.com/otp/copy/${qu}`}}, { quickReplyButton: { displayText: 'NEXT', id: '.heker'}}])
 break
 // BRUTAL SEND BY 𝚂𝙰𝚃𝙶𝙰𝙽𝚉 𝙳𝙴𝚅𝚂 〄
 case 'attack':
@@ -564,26 +661,7 @@ setUser("±alasan", sender, q)
 break
 case 'menu':
 if (cekUser("id", sender) == null) return sendDaftar(from)
-let buttonMessage = {
-image: thumb,
-fileLength: 88808964843634667969,
-caption : `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
-footer : `© XxX - Team`,
-buttons: [{buttonId: '.owner', buttonText: { displayText: 'O W N E R' }, type: 1 }],
-mentions: [sender],
-ephemeralExpiration: 86400,
-headerType: 4,
-contextInfo: { 
-externalAdReply: { 
-showAdAttribution: true,
-mediaUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-mediaType: 2, 
-description: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-title: "Don't Click",
-body: footer,
-thumbnail: thumb,
-sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
-satzz.sendMessage(from, buttonMessage)
+satzz.send5ButImg(from, `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender), footer, thumb, buttonMenu)
 break
 case 's':
 case 'sticker':
@@ -647,26 +725,7 @@ let dat =`${ucapin} - @${sender.split('@')[0]}\n\n
 • *Afk* : false
 Selamat @${sender.split("@")[0]} Anda berhasil bergabung ke database bot pada ${moment().format('LLL')}`
 var pePe = await satzz.profilePictureUrl(sender, 'image')
-const pelers = {
-image: { url : pePe },
-fileLength: 88808964843634667969,
-caption: dat,
-footer: footer,
-mentions: [sender],
-ephemeralExpiration: 86400,
-buttons: [{ buttonId: '.owner', buttonText: { displayText: 'o w n e r' }, type: 1 }, { buttonId: '.menu', buttonText: { displayText: 'm e n u' }, type: 1 }],
-headerType: 4,
-contextInfo: { 
-externalAdReply: { 
-showAdAttribution: true,
-mediaUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-mediaType: 2, 
-description: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-title: "Join Group Whatsapp Official",
-body: footer,
-thumbnail: thumb,
-sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
-satzz.sendMessage(from, pelers)
+satzz.send5ButImg(from, dat, footer, pePe)
 break
 case 'tobugstik':
 if (cekUser("id", sender) == null) return sendDaftar(from)
@@ -707,27 +766,8 @@ if (!isOwner) return reply('Lu siapa anying')
 if (!q) return reply('Teksnya?')
 var data = await store.chats.all()
 reply(`mengirim broadcast ke ${data.length} Chats`)
-const BroadCastMess = {
-image: thumb,
-fileLength: 88808964843634667969,
-caption: '𝘉𝘳𝘰𝘢𝘥𝘤𝘢𝘴𝘵\n\n\n\n'+ readMore +`${q}`,
-footer: footer,
-mentions: [sender],
-ephemeralExpiration: 86400,
-buttons: [{ buttonId: '.owner', buttonText: { displayText: 'o w n e r' }, type: 1 }],
-headerType: 4,
-contextInfo: { 
-externalAdReply: { 
-showAdAttribution: true,
-mediaUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-mediaType: 2, 
-description: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-title: "Join Group Whatsapp Official",
-body: footer,
-thumbnail: thumb,
-sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
 for (let i of data) {
-satzz.sendMessage(i.id, BroadCastMess)
+satzz.send5ButImg(i.id, '𝘉𝘳𝘰𝘢𝘥𝘤𝘢𝘴𝘵\n\n\n\n'+ readMore +`${q}`, footer, thumb, buttonDef,)
 }
 await sleep(1000)
 reply(`success broadcast ke ${data.length} Chats`)
