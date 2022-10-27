@@ -661,7 +661,23 @@ setUser("±alasan", sender, q)
 break
 case 'menu':
 if (cekUser("id", sender) == null) return sendDaftar(from)
-satzz.send5ButMsg(from, `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender), footer, buttonMenu)
+const buttonImage = {
+image: thumb,
+fileLength: 88808964843634667969,
+caption: `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
+footer: footer,
+mentions: [sender],
+templateButtons: buttonMenu,
+headerType: 4,
+contextInfo: { externalAdReply: { showAdAttribution: true,
+mediaUrl: 'https://instagram.com/satganzdevs.xyz',
+mediaType: 2, 
+description: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
+title: "Join Group Whatsapp Official",
+body: footer,
+thumbnail: thumb,
+sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
+satzz.sendMessage(from, buttonImage, { quoted : sat })
 break
 case 's':
 case 'sticker':
@@ -766,8 +782,17 @@ if (!isOwner) return reply('Lu siapa anying')
 if (!q) return reply('Teksnya?')
 var data = await store.chats.all()
 reply(`mengirim broadcast ke ${data.length} Chats`)
-for (let i of data) {
-satzz.send5ButMsg(i.id, '𝘉𝘳𝘰𝘢𝘥𝘤𝘢𝘴𝘵\n\n\n\n'+ readMore +`${q}`, footer, thumb, buttonDef)
+for (let hot of data) {
+let bcMess = {
+image: thumb,
+fileLength: 88808964843634667969,
+caption: `*_BROADCAST_*\n\n{q}`,
+footer: footer,
+mentions: [hot.id],
+templateButtons: buttonDef,
+headerType: 4
+}
+satzz.sendMessage(hot.id, buttonImage, { quoted : sat })
 }
 await sleep(1000)
 reply(`success broadcast ke ${data.length} Chats`)
@@ -823,8 +848,8 @@ var nyz = phone('+' + q);
 if (nyz.isValid == false) return reply("Nomer Yang anda masukkan tidak valid, Lakukan Seperti petunjuk yang di berikan, Contoh 62xxxx")
 await satzz.groupParticipantsUpdate(from, [nyz.phoneNumber.split("+")[1] + "@s.whatsapp.net"], "add").catch(e => {only("error", satzz, from)})
 break
-case 'peler':
-var tt =`satganzdevs `.repeat(100)
+case 'repeat':
+var tt =`${q1}.repeat(q2)
 reply(tt)
 break
 case 'promote':
