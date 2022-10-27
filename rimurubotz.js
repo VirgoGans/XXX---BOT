@@ -972,7 +972,7 @@ case 'getname':
 if (!isGroup) return only("isGroup", satzz, from)
 if (Tag() == "") return reply("tag Orang")
 var neme = await satzz.getName(Tag()[0])
-satzz.sendButtonText(from, butDef, `NAME : ${neme}` footer)
+satzz.sendButtonText(from, buttonDef, `NAME : ${neme}`, footer)
 break
 case 'block': case 'ban': case 'banned':
 if (!isGroup) return only("isGroup", satzz, from)
@@ -1025,7 +1025,7 @@ fileLength: 88808964843634667969,
 caption: '*_[ SOURCECODE ]_*'+ readMore +'\nhttps://bit.ly/SatganzDevs',
 footer: footer,
 mentions: [sender],
-templateButtons: butDef,
+templateButtons: buttonDef,
 headerType: 4,
 contextInfo: { externalAdReply: { showAdAttribution: true,
 mediaUrl: 'https://instagram.com/satganzdevs.xyz',
