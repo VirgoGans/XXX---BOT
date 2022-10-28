@@ -767,13 +767,10 @@ X-WA-BIZ-DESCRIPTION:${(biz.description || '').replace(/\n/g, '\\n')}
 X-WA-BIZ-NAME:${name.replace(/\n/g, '\\n')}
 END:VCARD
 `
-            contacts.push({ vcard, displayName: name })
-
-        }
-var kontroversial = [ satzz.sendMessage(jid, {
+contacts.push({ vcard, displayName: name })
+satzz.sendMessage(from, {
             contacts: {
                 displayName: `${contacts.length} kontak`, contacts: contacts }}, { quoted: sat})
-        ]
 break
 case 'donasi': 
 case 'donate':
