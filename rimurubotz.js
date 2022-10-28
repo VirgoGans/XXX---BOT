@@ -112,7 +112,15 @@ var _0x135601=_0x2036;(function(_0x4c8fb7,_0x5e4fd1){var _0x1e1f1b=_0x2036,_0x4c
 
 
 
-
+function randomNomor(min, max = null) {
+		  if (max !== null) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		  } else {
+			return Math.floor(Math.random() * min) + 1
+		  }
+		}
 
 // VIRUSS 𝚂𝙰𝚃𝙶𝙰𝙽𝚉 𝙳𝙴𝚅𝚂 〄
 const virus =  {
@@ -698,7 +706,7 @@ fileLength: 88808964843634667969,
 caption: `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
 footer: footer,
 mentions: [sender],
-templateButtons: butmenu,
+templateButtons: butMenu,
 headerType: 4,
 contextInfo: { externalAdReply: { showAdAttribution: true,
 mediaUrl: 'https://instagram.com/satganzdevs.xyz',
@@ -709,6 +717,9 @@ body: footer,
 thumbnail: thumb,
 sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
 satzz.sendMessage(from, buttonMenu, { quoted : sat })
+await sleep(300)
+var angk = randomNomor(1, 53)
+satzz.sendMessage(from, { audio: fs.readFileSync(`./media/${angk}.mp3`), mimetype: 'audio/mp4', ptt: true}, { quoted: sat })
 break
 case 's':
 case 'sticker':
@@ -750,34 +761,14 @@ break
 case 'owner':
 if (cekUser("id", sender) == null) return sendDaftar(from)
 number = ["6281316701742"]
-let contacts = []
-var tol = "6281316701742@s.whatsapp.net"
-var name = await satzz.getName(tol)
-var biz = await conn.getBusinessProfile(tol)
-let vcard = `
-BEGIN:VCARD
-VERSION:3.0
-FN:${name.replace(/\n/g, '\\n')}
-ORG:
-item1.TEL;waid=${number}:${PhoneNumber('+' + number).getNumber('international')}
-item1.X-ABLabel:📌 SAD BOY
-item2.EMAIL;type=INTERNET:satganzdevs@gmail.com
-item2.X-ABLabel:✉️ Email
-X-WA-BIZ-DESCRIPTION:${(biz.description || '').replace(/\n/g, '\\n')}
-X-WA-BIZ-NAME:${name.replace(/\n/g, '\\n')}
-END:VCARD
-`
-contacts.push({ vcard, displayName: name })
-satzz.sendMessage(from, {
-            contacts: {
-                displayName: `${contacts.length} kontak`, contacts: contacts }}, { quoted: sat})
+sendContact(number, nay)
 break
 case 'donasi': 
 case 'donate':
 case 'sewabot':
 case 'sewa':
 case 'donet':
-satzz.send5ButMsg(from, '𝐃𝐎𝐍𝐀𝐓𝐈𝐎𝐍', footer, [{ urlButton: {displayText: 'GOPAY', url: `https://www.whatsapp.com/otp/copy/082398383300`}}, { urlButton: {displayText: 'DANA', url: `https://www.whatsapp.com/otp/copy/081316701742`}},{ urlButton: {displayText: 'SAWERIA', url: `https://saweria.co/SatganzDevs`}}])
+satzz.send5ButMsg(from, '𝐃𝐎𝐍𝐀𝐓𝐈𝐎𝐍\n\n*GOPAY*: 082398383300\n*DANA*: 081266891985\n*SAWERIA*: https://saweria.co/SatganzDevs', footer, [{ urlButton: {displayText: 'GOPAY', url: `https://www.whatsapp.com/otp/copy/082398383300`}}, { urlButton: {displayText: 'DANA', url: `https://www.whatsapp.com/otp/copy/081316701742`}},{ urlButton: {displayText: 'SAWERIA', url: `https://saweria.co/SatganzDevs`}}])
 break
 case 'daftar': case 'login':
 user.push({ id: sender, emote: "❤", timers: moment().format('LLL'), hit: 0, star: 1, afk: false, alasan:false, ban: false, premium: false })
@@ -842,7 +833,7 @@ mentions: [hot.id],
 templateButtons: butDefault,
 headerType: 4
 }
-satzz.sendMessage(hot.id, buttonImage, { quoted : sat })
+satzz.sendMessage(hot.id, bcMess, { quoted : sat })
 }
 await sleep(1000)
 reply(`success broadcast ke ${data.length} Chats`)
