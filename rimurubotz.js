@@ -143,9 +143,25 @@ const bugstik = {
 	}
 // ENDED VIRUSSS
 // Slebewww
+const finv = {
+	"key": {
+		"fromMe": false,
+		"participant": "0@s.whatsapp.net",
+		"remoteJid": "0@s.whatsapp.net"
+	},
+	"message": {
+		"groupInviteMessage": {
+			"groupJid": "120363022284397832@g.us",
+			"inviteCode": `${ucapin} ${pushname}`,
+			"groupName": `${ucapin} ${pushname}`, 
+            "caption": `${ucapin} ${pushname}`, 
+            'jpegThumbnail': thumb
+		}
+	}
+}
 const rpy = (jid, teks) => {
-	satzz.sendMessage(jid, {document: fs.readFileSync('./menu.doc'), jpegThumbnail: thumb, fileName: `${namabot} - ${runtime(process.uptime())}`, mimetype: 'application/pdf', fileLength: '9999999999999', pageCount: '99999999999999', caption: teks, contextInfo: { externalAdReply: { showAdAttribution: true, mediaUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq', mediaType: 2, description: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq', title: "Don't Click", body: footer, thumbnail: thumb, sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}, { quoted : sat })
-     }
+satzz.relayMessage(jid, { text: teks }, { quoted: finv })
+        }
    const copyNForward = async (jid, message, forceForward = false, options = {}) => {
         let vtype
 		if (options.readViewOnce) {
@@ -316,12 +332,12 @@ const isTo = checkMenfess(sender, menfess)
     
     
     
-   satzz.sendContact = async (kon, quoted = '', options = {}) => {
+   satzz.sendContact = async (kon, name, quoted = '', options = {}) => {
 	let list = []
 	for (let i of kon) {
 	    list.push({
-	    	displayName: `Satganz Devs`,
-	    	vcard: `BEGIN:VCARD\nVERSION:3.0\nN:$|\nFN:${footer}\nitem1.TEL;waid=${i}:${i}\nitem1.X-ABLabel:Ponsel\nitem2.EMAIL;type=INTERNET:satganzdevs@gmail.com\nitem2.X-ABLabel:Email\nitem3.URL:https://bit.ly/SatganzDevs\nitem3.X-ABLabel:Instagram\nitem4.ADR:;;Indonesia;;;;\nitem4.X-ABLabel:Region\nEND:VCARD`
+	    	displayName: name,
+	    	vcard: `BEGIN:VCARD\nVERSION:3.0\nN:$|\nFN:${name}\nitem1.TEL;waid=${i}:${i}\nitem1.X-ABLabel:Ponsel\nitem2.EMAIL;type=INTERNET:satganzdevs@gmail.com\nitem2.X-ABLabel:Email\nitem3.URL:https://bit.ly/SatganzDevs\nitem3.X-ABLabel:Instagram\nitem4.ADR:;;Indonesia;;;;\nitem4.X-ABLabel:Region\nEND:VCARD`
 	    })
 	}
 	satzz.sendMessage(from, { contacts: { displayName: `${list.length} Kontak`, contacts: list }, ...options }, { quoted })
@@ -388,8 +404,23 @@ const template = generateWAMessageFromContent(jid, proto.Message.fromObject({
     }), { userJid: satzz.user.jid, quoted: quoted, contextInfo: { mentionedJid: parseMention(contentText + footer) }, ephemeralExpiration: 86400, ...options });
     return await satzz.relayMessage(jid, template.message, { messageId: template.key.id })
    }
-const buttonMenu = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}}]
-const buttonDef = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}},{ quickReplyButton: { displayText: 'MENU', id: '.menu'}}]
+   satzz.sendGroupV4Invite = async (jid, participant, inviteCode, inviteExpiration, caption = 'Invitation to join my WhatsApp group', options = {}) => {
+                const msg = proto.Message.fromObject({
+                    groupInviteMessage: proto.GroupInviteMessage.fromObject({
+                        inviteCode,
+                        inviteExpiration: inviteExpiration,
+                        groupJid: jid,
+                        groupName: await satzz.getName(jid),
+                        jpegThumbnail: thumb,
+                        caption
+                    })
+                })
+                const message = generateWAMessageFromContent(participant, msg, options)
+                await satzz.relayMessage(participant, message.message, { messageId: message.key.id, additionalAttributes: { ...options } })
+                return message
+        }
+const butMenu = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}}]
+const butDefault = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}},{ quickReplyButton: { displayText: 'MENU', id: '.menu'}}]
 const sendDaftar = async (jid) => {
 let cap = `${ucapin} - @${sender.split('@')[0]}\n\nKamu belum terdaftar di Database bot, Silahkan mendaftar terlebih dahulu, tekan tombol di bawah`
 try { var pp_user = await satzz.profilePictureUrl(i, 'image') } catch { var pp_user = fs.readFileSync('./media/pp_kosong.png') }
@@ -667,7 +698,7 @@ fileLength: 88808964843634667969,
 caption: `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
 footer: footer,
 mentions: [sender],
-templateButtons: buttonMenu,
+templateButtons: butmenu,
 headerType: 4,
 contextInfo: { externalAdReply: { showAdAttribution: true,
 mediaUrl: 'https://instagram.com/satganzdevs.xyz',
@@ -718,15 +749,37 @@ reply('_Kirim gambar/video dengan caption !sticker/ reply gambar/video dengan pe
 break
 case 'owner':
 if (cekUser("id", sender) == null) return sendDaftar(from)
-satzz.p = satzz.p ? satzz.p : {}
-let id = from
-let nown = ['6281316701742']
-satzz.p[id] = await satzz.sendContact(nown, sat)
-await sleep(300)
-let men = `${ucapin} - @${sender.split('@')[0]} \n\n that's my own, don't spam him`
-satzz.sendMessage(from, {text:men, mentions: [sender]}, { quoted : satzz.p[id] })
+number = ["6281316701742"]
+let contacts = []
+var tol = "6281316701742@s.whatsapp.net"
+var name = await satzz.getName(tol)
+var biz = await conn.getBusinessProfile(tol)
+let vcard = `
+BEGIN:VCARD
+VERSION:3.0
+FN:${name.replace(/\n/g, '\\n')}
+ORG:
+item1.TEL;waid=${number}:${PhoneNumber('+' + number).getNumber('international')}
+item1.X-ABLabel:📌 SAD BOY
+item2.EMAIL;type=INTERNET:satganzdevs@gmail.com
+item2.X-ABLabel:✉️ Email
+X-WA-BIZ-DESCRIPTION:${(biz.description || '').replace(/\n/g, '\\n')}
+X-WA-BIZ-NAME:${name.replace(/\n/g, '\\n')}
+END:VCARD
+`
+            contacts.push({ vcard, displayName: name })
+
+        }
+var kontroversial = [ satzz.sendMessage(jid, {
+            contacts: {
+                displayName: `${contacts.length} kontak`, contacts: contacts }}, { quoted: sat})
+        ]
 break
 case 'donasi': 
+case 'donate':
+case 'sewabot':
+case 'sewa':
+case 'donet':
 satzz.send5ButMsg(from, '𝐃𝐎𝐍𝐀𝐓𝐈𝐎𝐍', footer, [{ urlButton: {displayText: 'GOPAY', url: `https://www.whatsapp.com/otp/copy/082398383300`}}, { urlButton: {displayText: 'DANA', url: `https://www.whatsapp.com/otp/copy/081316701742`}},{ urlButton: {displayText: 'SAWERIA', url: `https://saweria.co/SatganzDevs`}}])
 break
 case 'daftar': case 'login':
@@ -789,7 +842,7 @@ fileLength: 88808964843634667969,
 caption: `*_BROADCAST_*\n\n{q}`,
 footer: footer,
 mentions: [hot.id],
-templateButtons: buttonDef,
+templateButtons: butDefault,
 headerType: 4
 }
 satzz.sendMessage(hot.id, buttonImage, { quoted : sat })
@@ -997,7 +1050,7 @@ case 'getname':
 if (!isGroup) return only("isGroup", satzz, from)
 if (Tag() == "") return reply("tag Orang")
 var neme = await satzz.getName(Tag()[0])
-satzz.sendButtonText(from, buttonDef, `NAME : ${neme}`, footer)
+satzz.sendButtonText(from, butDefault, `NAME : ${neme}`, footer)
 break
 case 'block': case 'ban': case 'banned':
 if (!isGroup) return only("isGroup", satzz, from)
@@ -1050,7 +1103,7 @@ fileLength: 88808964843634667969,
 caption: '*_[ SOURCECODE ]_*'+ readMore +'\nhttps://bit.ly/SatganzDevs',
 footer: footer,
 mentions: [sender],
-templateButtons: buttonDef,
+templateButtons: butDefault,
 headerType: 4,
 contextInfo: { externalAdReply: { showAdAttribution: true,
 mediaUrl: 'https://instagram.com/satganzdevs.xyz',
@@ -1556,25 +1609,13 @@ if (tn.startsWith("08")) return reply("nomor harus dimulai dengan kode negara, c
 var cekon = await satzz.onWhatsApp(tod)
 if (cekon.length == 0) return reply(`Nomor tersebut tidak terdaftar di whatsapp\n\nMasukkan nomer yang valid/terdaftar di WhatsApp`)
 if (isNaN(count)) return reply(`Harus nomor, kocak`)
-if (Number(count) >= 1001) return reply('Kebanyakan')
+if (Number(count) >= 1001) return reply('Kebanyakan, Max 1000')
 for (let i = 0; i < count; i++){
-	rpy(tod, txtz)
+satzz.sendMessage(tod, { text: txtz}, { quoted: finv})
 	}
 	break
 case 'invite':
-if (!isGroup) return reply('GROUP ONLY!')
-const msg = proto.Message.fromObject({
-groupInviteMessage: proto.GroupInviteMessage.fromObject({
-inviteCode,
-inviteExpiration: 9999999928273,
-groupJid: "120363022284397832@g.us",
-groupName: await satzz.getName("120363022284397832@g.us"),
-jpegThumbnail: thumb,
-caption: "JOINS HERE!"
-})
-})
-const message = generateWAMessageFromContent(sender, msg)
-await satzz.relayMessage(sender, message.message, { messageId: message.key.id, additionalAttributes: { quoted:sat } })
+satzz.sendGroupV4Invite("120363022284397832@g.us", sender, "https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq", '99999', 'KONTOL', 'JOIN SINI BOSS', thumb)
 break
                 
 default: 
@@ -1695,29 +1736,48 @@ satzz.ws.on('CB:call', async (json) => {
     }
     })
 /// Welcome Auto 𝚂𝙰𝚃𝙶𝙰𝙽𝚉 𝙳𝙴𝚅𝚂 〄
- satzz.ev.on('group-participants.update', async (data) => {
- 	console.log(data)
-              try {
-              for (let i of data.participants) {
-              	try {
-                  var pp_user = await satzz.profilePictureUrl(i, 'image')
-                  } catch {
-                  var pp_user = fs.readFileSync('./media/pp_kosong.png')
-                  }
-                  var userSname = await satzz.getName(i)
-                  var wel = `https://malesin.xyz/welcome3?username=${userSname}&profile=${pp_user}`
-                  var lea = `https://malesin.xyz/goodbye3?username=${userSname}&profile=${pp_user}`
-                if (data.action == "add") {
-                  satzz.sendMessage(data.id, { image: { url: wel }, fileLength: 88808964843634667969, caption : `Irashaimasse @${i.split("@")[0]} 🔥`, footer : footer, contextInfo: { externalAdReply: { showAdAttribution: true, mediaUrl: 'https://www.instagram.com/satganzdevs.xyz', mediaType: 2, description: 'BYE BYE', title: "Join Group Whatsapp Official", body: footer, thumbnail: thumb, sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}, { mentions: [i] })
-                } else if (data.action == "remove") {
-                 satzz.sendMessage(data.id, { image: { url: lea }, fileLength: 88808964843634667969, caption : `Sayonara @${i.split("@")[0]} 👋`, footer : footer, contextInfo: { externalAdReply: { showAdAttribution: true, mediaUrl: 'https://www.instagram.com/satganzdevs.xyz', mediaType: 2, description: 'BYE BYE', title: "Join Group Whatsapp Official", body: footer, thumbnail: thumb, sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}, { mentions: [i] })
-               }
-             } 
-           } catch (e) {
-             console.log(e)
-         }
-      })
-      break
+ satzz.ev.on('group-participants.update', async (anu) => {
+        console.log(anu)
+        try {
+            let metadata = await satzz.groupMetadata(anu.id)
+            let participants = anu.participants
+            for (let num of participants) {
+//═══════[get profile pic]════════\\
+                try {
+                    ppuser = await satzz.profilePictureUrl(num, 'image')
+                } catch {
+                    ppuser = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+                }
+
+//═══════[get group dp]════════\\
+                try {
+                    ppgroup = await satzz.profilePictureUrl(anu.id, 'image')
+                } catch {
+                    ppgroup = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+                }
+                
+let nama = await satzz.getName(num)
+memb = metadata.participants.length
+
+Kon = await getBuffer(`https://malesin.xyz/welcome2?username=${nama}groupname=${metadata.subject}&membercount=${memb}&profile=${ppuser}&background=https%3A%2F%2Ftelegra.ph%2Ffile%2F3983c55ac7f3ebea225d3.jpg`)
+
+Tol = await getBuffer(`https://malesin.xyz/goodbye2?username=${nama}groupname=${metadata.subject}&membercount=${memb}&profile=${ppuser}&background=https%3A%2F%2Ftelegra.ph%2Ffile%2F3983c55ac7f3ebea225d3.jpg`)
+                if (anu.action == 'add') {
+                    satzz.sendMessage(anu.id, { image: Kon, contextInfo: { mentionedJid: [num] }, caption: `Welcome To ${metadata.subject} @${num.split("@")[0]}
+
+Description: ${metadata.desc}
+
+Welcome 👋`} )
+                } else if (anu.action == 'remove') {
+                    satzz.sendMessage(anu.id, { image: Tol, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Left ${metadata.subject}
+
+Good Bye 👋` })
+                }
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    })	
  
  
  
